@@ -3,7 +3,7 @@
  * Plugin Name: WP Image Zoom
  * Plugin URI: https://wordpress.org/plugins/wp-image-zoooom/
  * Description: Add zoom effect over the an image, whether it is an image in a post/page or the featured image of a product in a WooCommerce shop
- * Version: 1.57
+ * Version: 1.58
  * Author: SilkyPress
  * Author URI: https://www.silkypress.com
  * License: GPL2
@@ -12,7 +12,7 @@
  * Domain Path: /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to: 9.1
+ * WC tested up to: 9.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 	 * @class ImageZoooom
 	 */
 	final class ImageZoooom {
-		public $version             = '1.57';
+		public $version             = '1.58';
 		public $theme               = '';
 		protected static $_instance = null;
 
@@ -276,13 +276,14 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 			$v      = IMAGE_ZOOM_VERSION;
 			$url    = IMAGE_ZOOM_URL;
 			$prefix = '.min';
+			$in_footer = array( 'in_footer' => false, 'strategy'  => 'defer' );
 
 			// Load the jquery.image_zoom.js
-			wp_register_script( 'image_zoooom', $url . 'assets/js/jquery.image_zoom' . $prefix . '.js', array( 'jquery' ), $v, false );
+			wp_register_script( 'image_zoooom', $url . 'assets/js/jquery.image_zoom' . $prefix . '.js', array( 'jquery' ), $v, $in_footer );
 			wp_enqueue_script( 'image_zoooom' );
 
 			// Load the image_zoom-init.js
-			wp_register_script( 'image_zoooom-init', $url . 'assets/js/image_zoom-init.js', array( 'jquery' ), $v, false );
+			wp_register_script( 'image_zoooom-init', $url . 'assets/js/image_zoom-init.js', array( 'jquery' ), $v, $in_footer );
 			wp_localize_script( 'image_zoooom-init', 'IZ', $this->get_localize_vars() );
 			wp_enqueue_script( 'image_zoooom-init' );
 

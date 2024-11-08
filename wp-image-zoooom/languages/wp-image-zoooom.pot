@@ -347,7 +347,7 @@ msgid "Enable on attachments pages"
 msgstr ""
 
 #: includes/settings.php:197
-msgid "FlexSlider container class"
+msgid "FlexSlider container"
 msgstr ""
 
 #: includes/settings.php:203

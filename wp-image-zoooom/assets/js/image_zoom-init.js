@@ -5,10 +5,6 @@
 };
 
 
-
-!function(a){function b(){var a=document.createElement("p"),b=!1;if(a.addEventListener)a.addEventListener("DOMAttrModified",function(){b=!0},!1);else{if(!a.attachEvent)return!1;a.attachEvent("onDOMAttrModified",function(){b=!0})}return a.setAttribute("id","target"),b}function c(b,c){if(b){var d=this.data("attr-old-value");if(c.attributeName.indexOf("style")>=0){d.style||(d.style={});var e=c.attributeName.split(".");c.attributeName=e[0],c.oldValue=d.style[e[1]],c.newValue=e[1]+":"+this.prop("style")[a.camelCase(e[1])],d.style[e[1]]=c.newValue}else c.oldValue=d[c.attributeName],c.newValue=this.attr(c.attributeName),d[c.attributeName]=c.newValue;this.data("attr-old-value",d)}}var d=window.MutationObserver||window.WebKitMutationObserver;a.fn.attrchange=function(e,f){if("object"==typeof e){var g={trackValues:!1,callback:a.noop};if("function"==typeof e?g.callback=e:a.extend(g,e),g.trackValues&&this.each(function(b,c){for(var d,e={},f=0,g=c.attributes,h=g.length;h>f;f++)d=g.item(f),e[d.nodeName]=d.value;a(this).data("attr-old-value",e)}),d){var h={subtree:!1,attributes:!0,attributeOldValue:g.trackValues},i=new d(function(b){b.forEach(function(b){var c=b.target;g.trackValues&&(b.newValue=a(c).attr(b.attributeName)),"connected"===a(c).data("attrchange-status")&&g.callback.call(c,b)})});return this.data("attrchange-method","Mutation Observer").data("attrchange-status","connected").data("attrchange-obs",i).each(function(){i.observe(this,h)})}return b()?this.data("attrchange-method","DOMAttrModified").data("attrchange-status","connected").on("DOMAttrModified",function(b){b.originalEvent&&(b=b.originalEvent),b.attributeName=b.attrName,b.oldValue=b.prevValue,"connected"===a(this).data("attrchange-status")&&g.callback.call(this,b)}):"onpropertychange"in document.body?this.data("attrchange-method","propertychange").data("attrchange-status","connected").on("propertychange",function(b){b.attributeName=window.event.propertyName,c.call(a(this),g.trackValues,b),"connected"===a(this).data("attrchange-status")&&g.callback.call(this,b)}):this}return"string"==typeof e&&a.fn.attrchange.hasOwnProperty("extensions")&&a.fn.attrchange.extensions.hasOwnProperty(e)?a.fn.attrchange.extensions[e].call(this,f):void 0}}(jQuery);
-
-
 jQuery(document).ready(function( $ ){
 
     if(window.mobilecheck() && IZ.enable_mobile != '1' ) {
@@ -202,42 +198,43 @@ jQuery(document).ready(function( $ ){
 
 
     // Show zoom on the WooCommerce 3.0.+ gallery with slider
-    if ( IZ.with_woocommerce == '1' && (IZ.woo_slider == '1' || $('.woo_product_slider_enabled').length > 0 )) {
-        if ( $(".woocommerce-product-gallery img").length > 0 ) {
+    if ( IZ.with_woocommerce == '1' && (IZ.woo_slider == '1' || $('.woo_product_slider_enabled').length > 0 ) && $(".woocommerce-product-gallery img").length > 0 ) {
 
+			// Zoom on the first image
             var first_img = ".woocommerce-product-gallery__wrapper img";
             setTimeout( function() {
                 if ( $(".woocommerce-product-gallery .flex-viewport").length > 0 ) {
                     first_img = ".woocommerce-product-gallery__wrapper .flex-active-slide img";
                 }
                 $(first_img).first().image_zoom( options );
-                restart_on_hover($(first_img).first());
+             //   restart_on_hover($(first_img).first());
             }, 500 );
 
-            var flexslider_counter = 0;
-            var old_value = "";
-            $(".woocommerce-product-gallery__wrapper").attrchange({
-                trackValues: true,
-                callback: function(event) {
-                    if ( event.newValue != old_value ) {
-                        $(".zoomContainer").remove();
-                        setTimeout( function() {
-                            $(first_img).first().image_zoom(options);
-                            restart_on_hover($(first_img).first());
-                        }, 550);
-                    }
-                    old_value = event.newValue;
-                }
-            });
-            $(".pswp").attrchange({
-                trackValues: true,
-                callback: function(event) {
-                    if ( event.newValue != old_value ) {
-                        $(".zoomContainer").remove();
-                    }
-                }
-            });
+			// Change the zoom when the image in the gallery changes
+			const galleryObserver = new MutationObserver( function(mutationList, observer) {
+				for (const mutation of mutationList) {
+					if ( mutation.type !== "attributes" || mutation.attributeName !== "class" ) continue;
+					if ( ! mutation.target.getAttribute( "class" ).includes( "flex-active-slide" ) ) continue;
 
+					$(".zoomContainer").remove();
+					setTimeout( function() {
+						$(first_img).first().image_zoom(options);
+						restart_on_hover($(first_img).first());
+					}, 550);
+				}
+			});
+			galleryObserver.observe(document.querySelector(".woocommerce-product-gallery__wrapper"), { attributes: true, subtree: true });
+
+			// Remove the zoom when opening the lightbox 
+			const lightboxObserver = new MutationObserver( function(mutationList, observer) {
+				for (const mutation of mutationList) {
+					if ( mutation.type !== "attributes" || mutation.attributeName !== "class" ) continue;
+					if ( ! mutation.target.getAttribute( "class" ) === "pswp__ui pswp__ui--fit" ) continue;
+
+					$(".zoomContainer").remove();
+				}
+			});
+			lightboxObserver.observe(document.querySelector(".pswp"), { attributes: true, subtree: true });
 
 
             // Resize the zoom windows when resizing the page
@@ -256,8 +253,6 @@ jQuery(document).ready(function( $ ){
             $(".woocommerce-product-gallery img").on('click', function(e){
                 e.preventDefault();
             });
-
-        }
     }
 
 

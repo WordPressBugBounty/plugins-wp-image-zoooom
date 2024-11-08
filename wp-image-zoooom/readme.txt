@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: zoom, image zoom, magnify image, image magnifier, woocommerce zoom 
 Requires at least: 3.0.1
-Tested up to: 6.6 
-Stable tag: 1.57
+Tested up to: 6.7 
+Stable tag: 1.58
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -38,7 +38,7 @@ For applying the zoom on an image on a page/post from within a page builder, you
 * Page Builder by SiteOrigin - [screenshot](https://www.silkypress.com/wp-content/uploads/2020/04/site-origin-zoooom.png)
 * Elementor Page Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2016/09/image-zoom-elementor.png). It works with all the Image Size options, except Custom.
 * Beaver Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2020/04/beaver-builder-zoooom.png)
-* Divi Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2016/09/divi-builder.png) (used by the Divi theme)
+* Divi Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2024/11/divi-builder.png) (used by the Divi theme)
 * Avia Layout Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2019/04/enfold-apply-zoooom.png) (used by the Enfold theme)
 * Fusion Page Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2021/06/fusion-zoooom.png)
 * Brizy Page Builder - [screenshot](https://www.silkypress.com/wp-content/uploads/2019/01/zoom-brizy.png)
@@ -154,6 +154,11 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 8. Apply the zoom from Page Builder by SiteOrigin, the Image Widget
 
 == Changelog ==
+
+= 1.58 2024-11-08 =
+* Use the Script API strategy feature to defer front-end scripts in WordPress 6.3+
+* Use the MutationObserver interface to watch for image change in the WooCommerce gallery
+* Feature: "no-zoooom" CSS class for disabling the zoom effect on any child IMG elements
 
 = 1.57 2024-06-30 =
 * Compatibility with the Kalium theme 
