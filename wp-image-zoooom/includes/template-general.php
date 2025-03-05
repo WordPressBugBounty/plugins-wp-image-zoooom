@@ -42,6 +42,23 @@ $brand = vsprintf(
 	</p>
 </div>
 
+<div id="add-zoooom-help" style="display:none;">
+	<p>The zoom can be added to an image within a page/post by adding the “zoooom” CSS class to the image. Here are screenshots on how to do this with the most popular page builders:</p>
+		<ul style="list-style: inside; padding-left: 20px;">
+			<li> Gutenberg – <a href="https://www.silkypress.com/wp-content/uploads/2018/10/zoom-gutenberg.png" target="_blank">screenshot</a>
+			<li> WPBakery – depending on the page builder’s version: 1) <a href="https://www.silkypress.com/wp-content/uploads/2017/05/image-zoom-js_composer.png" target="_blank">screenshot</a> with the “large” or “full” for the Image Size setting. Or 2) <a href="https://www.silkypress.com/wp-content/uploads/2019/06/wpbakery-zoooom.png" target="_blank">screenshot</a>.
+			<li> Page Builder by SiteOrigin – <a href="https://www.silkypress.com/wp-content/uploads/2020/04/site-origin-zoooom.png" target="_blank">screenshot</a>
+			<li> Elementor Page Builder – <a href="https://www.silkypress.com/wp-content/uploads/2016/09/image-zoom-elementor.png" target="_blank">screenshot</a>. It works with all the Image Size options, except Custom.
+			<li> Beaver Builder – <a href="https://www.silkypress.com/wp-content/uploads/2020/04/beaver-builder-zoooom.png" target="_blank">screenshot</a>
+			<li> Divi Builder – <a href="https://www.silkypress.com/wp-content/uploads/2024/11/divi-builder.png" target="_blank">screenshot</a> (used by the Divi theme)
+			<li> Avia Layout Builder – <a href="https://www.silkypress.com/wp-content/uploads/2019/04/enfold-apply-zoooom.png" target="_blank">screenshot</a> (used by the Enfold theme)
+			<li> Fusion Page Builder – <a href="https://www.silkypress.com/wp-content/uploads/2021/06/fusion-zoooom.png" target="_blank">screenshot</a>
+			<li> Brizy Page Builder – <a href="https://www.silkypress.com/wp-content/uploads/2019/01/zoom-brizy.png" target="_blank">screenshot</a>
+			<li> Tatsu Page Builder – <a href="https://www.dropbox.com/h?preview=tatsu-builder-zoom.flv" target="_blank">screencast</a>
+		</ul>
+</div>
+
+
 <h2><?php printf( esc_html__( 'WP Image Zoom by %1$s', 'wp-image-zoooom' ), $brand ); ?></h2>
 
 <div class="wrap">

@@ -1,6 +1,11 @@
 
 === Changelog for the WP Image Zoom plugin ===
 
+= 1.59 2025-03-05 =
+* Feature: compatibility with the SureCart product gallery images
+* Fix: use the pro version, if both the free and the pro version are simultaneously active
+* Tweak: rearrange the options on the General Settings page
+
 = 1.58 2024-11-08 =
 * Use the Script API strategy feature to defer front-end scripts in WordPress 6.3+
 * Use the MutationObserver interface to watch for image change in the WooCommerce gallery

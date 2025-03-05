@@ -1,18 +1,18 @@
 <?php
 /**
- * Plugin Name: WP Image Zoom
- * Plugin URI: https://wordpress.org/plugins/wp-image-zoooom/
- * Description: Add zoom effect over the an image, whether it is an image in a post/page or the featured image of a product in a WooCommerce shop
- * Version: 1.58
- * Author: SilkyPress
- * Author URI: https://www.silkypress.com
- * License: GPL2
+ * Plugin Name:          WP Image Zoom
+ * Plugin URI:           https://wordpress.org/plugins/wp-image-zoooom/
+ * Description:          Add zoom effect over the an image, whether it is an image in a post/page or the featured image of a product in a WooCommerce shop
+ * Version:              1.59
+ * Author:               SilkyPress
+ * Author URI:           https://www.silkypress.com
+ * License:              GPL2
  *
- * Text Domain: wp-image-zoooom
- * Domain Path: /languages/
+ * Text Domain:          wp-image-zoooom
+ * Domain Path:          /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to: 9.5
+ * WC tested up to:      9.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 	 * @class ImageZoooom
 	 */
 	final class ImageZoooom {
-		public $version             = '1.58';
+		public $version             = '1.59';
 		public $theme               = '';
 		protected static $_instance = null;
 
@@ -74,11 +74,15 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 			define( 'IMAGE_ZOOM_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'IMAGE_ZOOM_VERSION', $this->version );
 
+			if ( class_exists( 'ImageZoooomPRO' ) ) {
+				return false;
+			}
+
 			$this->theme = strtolower( get_template() );
 			include_once 'includes/settings.php';
 
 			if ( is_admin() ) {
-				$this->load_plugin_textdomain();
+				add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 				include_once 'includes/admin-side.php';
 				new ImageZoooom_Admin();
 			}
@@ -310,6 +314,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 				'enable_mobile'       => $general['enable_mobile'],
 				'options'             => $options,
 				'woo_slider'          => '0',
+				'enable_surecart'     => ( isset( $general['enable_surecart'] ) && $general['enable_surecart'] == 1 ) ? '1' : '0',
 			);
 
 			if ( class_exists( 'woocommerce' ) && version_compare( WC_VERSION, '3.0', '>' ) && current_theme_supports( 'wc-product-gallery-slider' ) ) {

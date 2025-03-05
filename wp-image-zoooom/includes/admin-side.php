@@ -151,7 +151,7 @@ class ImageZoooom_Admin {
 		}
 
 		// Premium tooltips.
-		$message = __( 'Only available in <a href="%1$s" target="_blank">PRO version</a>', 'wp-image-zoooom' );
+		$message = __( 'Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-image-zoooom' );
 		$message = wp_kses(
 			$message,
 			array(

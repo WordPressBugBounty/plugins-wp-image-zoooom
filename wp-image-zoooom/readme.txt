@@ -5,7 +5,7 @@ Email: diana@burduja.eu
 Tags: zoom, image zoom, magnify image, image magnifier, woocommerce zoom 
 Requires at least: 3.0.1
 Tested up to: 6.7 
-Stable tag: 1.58
+Stable tag: 1.59
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -155,6 +155,11 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 
 == Changelog ==
 
+= 1.59 2025-03-05 =
+* Feature: compatibility with the SureCart product gallery images
+* Fix: use the pro version, if both the free and the pro version are simultaneously active
+* Tweak: rearrange the options on the General Settings page
+
 = 1.58 2024-11-08 =
 * Use the Script API strategy feature to defer front-end scripts in WordPress 6.3+
 * Use the MutationObserver interface to watch for image change in the WooCommerce gallery
@@ -175,10 +180,5 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 
 = 1.53 2023-05-17 =
 * Compatibility with the WooCommerce "Custom Order Tables" feature
-
-= 1.52 2022-11-16 =
-* Fix: the zoom lens should be under the menu for the Flatsome theme
-* Fix: remove zoom on placeholder photos on WooCommerce category pages
-* Feature: support SVG images
 
 [See full changelog](https://plugins.svn.wordpress.org/wp-image-zoooom/trunk/changelog.txt).
