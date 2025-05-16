@@ -420,7 +420,7 @@ if ( ! function_exists( 'wp_image_zoooom_settings' ) ) {
 			),
 			'enable_surecart'            => array(
 				'label'      => __( 'Enable product images', 'wp-image-zoooom' ),
-				'value'      => true,
+				'value'      => false,
 				'input_form' => 'checkbox',
 				'section'    => 'general',
 			),

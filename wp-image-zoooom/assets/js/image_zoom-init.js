@@ -346,19 +346,9 @@ jQuery(document).ready(function( $ ){
     // Show zoom on the SureCart gallery 
     if ( IZ.enable_surecart == '1' && $( "body.single-sc_product").length > 0 ) {
 
-		let galleryContainer = ".sc-image-slider > .swiper";
-		IZ.options.onMouseMove = true;
+		IZ.options.zIndex = 5;
 
-		let triggerLightbox = function() {
-			$( ".zoomContainer" ).on( "click", function() {
-				$( ".swiper-slide-active button.lightbox-trigger" ).trigger( 'click' );
-			});
-		}
-
-		let startZoom = function() {
-			$( galleryContainer + " .swiper-slide-active img" ).image_zoom( IZ.options );
-			setTimeout( triggerLightbox, 400 );
-
+		let removeLightboxInert = function() {
 			const lightboxObserver = new MutationObserver(() => {
 				$('div[inert]').removeAttr('inert');
 			});
@@ -367,26 +357,62 @@ jQuery(document).ready(function( $ ){
 			});
 		}
 
-		setTimeout( startZoom, 300 );
+		let imageContainer = "figure.wp-block-surecart-product-media";
+		if ( $( imageContainer ).length > 0 ) {
+			// A single static image.
+			
+			IZ.options.onComplete = function() {
+				$( ".zoomContainer" ).on("click", function() {
+					$( imageContainer + " button.lightbox-trigger" ).trigger( 'click' );
+				} );
+			};
+			$( imageContainer + " img" ).image_zoom( IZ.options );
+			removeLightboxInert();
+		} else {
+			// Gallery with multiple images.
 
-		let changeTimestamp = 0;
-		const galleryObserver = new MutationObserver(() => {
-			if ( Date.now() - changeTimestamp < 200 ) {
-				return;
+			let galleryContainer = ".sc-image-slider > .swiper";
+			IZ.options.onMouseMove = true;
+
+			let triggerLightbox = function() {
+				$( ".zoomContainer" ).on( "click", function() {
+					$( ".swiper-slide-active button.lightbox-trigger" ).trigger( 'click' );
+				});
 			}
-			changeTimestamp = Date.now();
-			$( ".zoomContainer" ).remove();
-			setTimeout(
-				function() {
-					$( galleryContainer + " .swiper-slide-active img" ).image_zoom( IZ.options );
-					setTimeout( triggerLightbox, 400 );
-				},
-				400
-			);
-		});
-		galleryObserver.observe(document.querySelector(galleryContainer + " .swiper-wrapper"), {
-			attributes: true
-		});
+
+			let startZoom = function() {
+				$( galleryContainer + " .swiper-slide-active img" ).image_zoom( IZ.options );
+				setTimeout( triggerLightbox, 400 );
+
+				const lightboxObserver = new MutationObserver(() => {
+					$('div[inert]').removeAttr('inert');
+				});
+				lightboxObserver.observe(document.querySelector(".sc-lightbox-overlay"), {
+					attributes: true
+				});
+			}
+
+			setTimeout( startZoom, 300 );
+
+			let changeTimestamp = 0;
+			const galleryObserver = new MutationObserver(() => {
+				if ( Date.now() - changeTimestamp < 200 ) {
+					return;
+				}
+				changeTimestamp = Date.now();
+				$( ".zoomContainer" ).remove();
+				setTimeout(
+					function() {
+						$( galleryContainer + " .swiper-slide-active img" ).image_zoom( IZ.options );
+						setTimeout( triggerLightbox, 400 );
+					},
+					400
+				);
+			});
+			galleryObserver.observe(document.querySelector(galleryContainer + " .swiper-wrapper"), {
+				attributes: true
+			});
+		}
 	}
 
 });

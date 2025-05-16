@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: zoom, image zoom, magnify image, image magnifier, woocommerce zoom 
 Requires at least: 3.0.1
-Tested up to: 6.7 
-Stable tag: 1.59
+Tested up to: 6.8 
+Stable tag: 1.60
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -14,7 +14,7 @@ Awesome image zoom plugin for images in posts/pages and for WooCommerce products
 
 == Description ==
 
-= Awesome image zoom for images in posts/pages and for WooCommerce products =
+= Awesome image zoom for images in posts/pages and for WooCommerce or SureCart products =
 
 WP Image Zoom is a robust, modern and very configurable image zoom plugin. It allows you to easily create a magnifying glass on your images, all from a very intuitive WP admin interface.
 

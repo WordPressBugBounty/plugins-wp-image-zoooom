@@ -12,22 +12,27 @@ defined( 'ABSPATH' ) || exit;
  */
 class IZ_Compatibilities {
 
+	public static $wc_version;
+
 	/**
 	 * Initiate the class.
 	 */
 	public static function init() {
-		add_action( 'wp_head', 'IZ_Compatibilities::wp_head', 40 );
-		add_action( 'vc_after_init', 'IZ_Compatibilities::vc_after_init' );
-		add_action( 'after_setup_theme', 'IZ_Compatibilities::after_setup_theme' );
-		add_action( 'before_woocommerce_init', 'IZ_Compatibilities::before_woocommerce_init' );
-		add_action( 'init', 'IZ_Compatibilities::admin_side' );
+		self::$wc_version = defined( 'WC_VERSION' ) ? WC_VERSION : '10';
+
+		add_action( 'wp_head', array( __CLASS__, 'wp_head_css' ), 40 );
+		add_action( 'wp_head', array( __CLASS__, 'wp_head_js' ), 40 );
+		add_action( 'vc_after_init', array( __CLASS__, 'vc_after_init' ) );
+		add_action( 'after_setup_theme', array( __CLASS__, 'after_setup_theme' ) );
+		add_action( 'before_woocommerce_init', array( __CLASS__, 'before_woocommerce_init' ) );
+		add_action( 'init', array( __CLASS__, 'admin_side' ) );
 	}
 
 
 	/**
 	 * CSS modifications.
 	 */
-	public static function wp_head() {
+	public static function wp_head_css() {
 		$theme = strtolower( get_template() );
 
 		$opt                       = get_option( 'zoooom_general', array() );
@@ -138,6 +143,14 @@ class IZ_Compatibilities {
 		}
 
 		/**
+		 * On SureCart gallery images.
+		 */
+		if ( defined( 'SURECART_PLUGIN_FILE' ) ) {
+			$style .= '.sc-image-slider > .swiper {z-index: unset !important}';
+		}
+
+
+		/**
 		 * Elementor Page Builder plugin.
 		 */
 		if ( defined( 'ELEMENTOR_VERSION' ) ) {
@@ -150,11 +163,11 @@ class IZ_Compatibilities {
 		$zoom_class_in_editor = ' { content: "\f179     ' . __( 'Zoom applied to the image. Check on the frontend', 'wp-image-zoooom' ) . '"; ' . 
 			'position: absolute; margin-top: 12px; text-align: right; background-color: white; line-height: 1.4em; left: 5%; ' .
 			'padding: 0 10px 6px; font-family: dashicons; font-size: 0.9em; font-style: italic; z-index: 20; }';
-	
+
 		if ( defined( 'ELEMENTOR_VERSION' ) ) {
 			$style .= 'body.elementor-editor-active .zoooom::before' . $zoom_class_in_editor;
 		}
-	
+
 		if ( defined( 'WPB_VC_VERSION' ) ) {
 			$style .= '.vc_editor.compose-mode .zoooom::before' . $zoom_class_in_editor;
 		}
@@ -175,8 +188,18 @@ class IZ_Compatibilities {
 		if ( ! empty( $style ) ) {
 			echo '<style' . $type . '>' . $style . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
+	}
 
 
+	/**
+	 * JS modifications.
+	 */
+	public static function wp_head_js() {
+		$theme = strtolower( get_template() );
+		$opt             = get_option( 'zoooom_general', array() );
+		$opt['enable_woocommerce'] = isset( $opt['enable_woocommerce'] ) ? $opt['enable_woocommerce'] : true;
+		$is_woocommerce  = $opt['enable_woocommerce'] && class_exists( 'woocommerce' ) ? true : false;
+		$is_woocommerce3 = ( $is_woocommerce ) && version_compare( self::$wc_version, '3.0', '>' ) ? true : false;
 
         $js = '';
 
@@ -257,7 +280,8 @@ class IZ_Compatibilities {
 
 		// The Storefront theme adds "img{display:block}" CSS rule to the editor, so the Classic Editor sees no content selected in the editor.selection.getContent().
 		if ( strpos( $theme, 'storefront' ) !== false ) {
-			add_editor_style( array( IMAGE_ZOOM_URL . 'assets/css/editor-style.css' ) );
+			$plugins_url = plugins_url( '/', str_replace( 'includes/class-iz-pro-compatibilities.php', 'image-zoooom.php', __FILE__) );
+			add_editor_style( array( $plugins_url . 'assets/css/editor-style.css' ) );
 		}
 	}
 
@@ -267,7 +291,8 @@ class IZ_Compatibilities {
 	 */
 	public static function before_woocommerce_init() {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', IMAGE_ZOOM_FILE, true );
+			$path = WP_PLUGIN_DIR . '/wp-image-zoooom/image-zoooom.php';
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $path, true );
 		}
 	}
 
@@ -280,10 +305,11 @@ class IZ_Compatibilities {
 			return false;
 		}
 		$param = WPBMap::getParam( 'vc_single_image', 'style' );
-		if ( is_array( $param ) ) {
-			$param['value'][ __( 'WP Image Zoooom', 'wp-image-zoooom' ) ] = 'zoooom';
-			vc_update_shortcode_param( 'vc_single_image', $param );
+		if ( ! isset( $param ) || ! isset( $param['value'] ) ) {
+			return;
 		}
+		$param['value'][ __( 'WP Image Zoooom', 'wp-image-zoooom' ) ] = 'zoooom';
+		vc_update_shortcode_param( 'vc_single_image', $param );
 	}
 
 
@@ -298,4 +324,13 @@ class IZ_Compatibilities {
 	}
 }
 
-IZ_Compatibilities::init();
+add_action( 'plugins_loaded', array( 'IZ_Compatibilities', 'init' ) );
+
+/**
+ * Enable the `wp_calculate_image_srcset` feature on the X theme.
+ */
+if ( ! function_exists( 'x_disable_wp_image_srcset' ) ) {
+	function x_disable_wp_image_srcset() {
+		return true;
+	}
+}
