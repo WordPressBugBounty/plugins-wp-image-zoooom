@@ -3,16 +3,16 @@
  * Plugin Name:          WP Image Zoom
  * Plugin URI:           https://wordpress.org/plugins/wp-image-zoooom/
  * Description:          Add zoom effect over the an image, whether it is an image in a post/page or the featured image of a product in a WooCommerce shop
- * Version:              1.60
+ * Version:              1.61
  * Author:               SilkyPress
  * Author URI:           https://www.silkypress.com
- * License:              GPL2
+ * License:              GPLv3
  *
  * Text Domain:          wp-image-zoooom
  * Domain Path:          /languages/
  *
  * WC requires at least: 3.0.0
- * WC tested up to:      9.8
+ * WC tested up to:      10.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -239,7 +239,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 		 * Enqueue the jquery.image_zoom.js
 		 */
 		public static function wp_enqueue_scripts() {
-			$in_footer = array( 'in_footer' => false, 'strategy'  => 'defer' );
+			$in_footer = array( 'in_footer' => false, 'strategy'  => 'defer', 'fetchpriority' => 'low' );
 			$v      = self::$version;
 			$url    = IMAGE_ZOOM_URL;
 			$prefix = '.min';
@@ -287,7 +287,6 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 				$default['woo_slider'] = 0;
 			}
 
-			$with_woocommerce = true;
 			if ( ! self::woocommerce_is_active() ) {
 				$default['with_woocommerce'] = '0';
 			}
@@ -333,7 +332,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 						'borderColour' => $i['borderColor'],
 						'cursor'       => $i['cursorType'],
 						'lensFadeIn'   => $i['lensFade'] * 1000,
-						'lensFadeOut'  => $i['lensFade'] * 1000,
+						'lensFadeIn'   => $i['lensFade'] * 1000,
 					);
 					if ( $i['tint'] == true ) {
 						$o['tint']        = 'true';

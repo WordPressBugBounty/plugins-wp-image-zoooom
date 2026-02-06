@@ -162,7 +162,7 @@ class ImageZoooom_Notices {
 
 						var data = {
 							action: 'zoooom_notice_dismiss',
-							option: '<?php echo $option_name; ?>'
+							option: '<?php echo __( $option_name ); ?>'
 						};
 						$.post(ajaxurl, data, function(response ) {
 							$('#zoooom_notice').fadeOut('slow');

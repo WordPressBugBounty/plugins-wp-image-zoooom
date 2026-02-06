@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: zoom, image zoom, magnify image, image magnifier, woocommerce zoom 
 Requires at least: 3.0.1
-Tested up to: 6.8 
-Stable tag: 1.60
+Tested up to: 6.9 
+Stable tag: 1.61
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -155,6 +155,16 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 
 == Changelog ==
 
+= 1.61 2025-12-03 =
+* Security: added escaping to input values for admin text inputs
+* Fix: correct the fading time on the frontend
+* Tweak: add the `fetchpriority="low"` attribute to the <script> HTML element
+
+= 1.60 2025-05-16 =
+* Fix: the zoom lens should be under the menu for the Customizr and Customizr Pro theme
+* Fix: _load_textdomain_just_in_time warning was showing up when activating the plugin
+* Fix: correct the lens' fading time on the frontend
+
 = 1.59 2025-03-05 =
 * Feature: compatibility with the SureCart product gallery images
 * Fix: use the pro version, if both the free and the pro version are simultaneously active
@@ -171,14 +181,5 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 
 = 1.56 2024-03-29 =
 * Feature: support AVIF images
-
-= 1.55 2023-12-19 =
-* Fix: deprecation notices with PHP8.3
-
-= 1.54 2023-11-14 =
-* Fix: support SVG images with intrinsic size larger than zero
-
-= 1.53 2023-05-17 =
-* Compatibility with the WooCommerce "Custom Order Tables" feature
 
 [See full changelog](https://plugins.svn.wordpress.org/wp-image-zoooom/trunk/changelog.txt).

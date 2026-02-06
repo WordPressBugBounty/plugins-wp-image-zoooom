@@ -129,6 +129,13 @@ class IZ_Compatibilities {
 		}
 
 		/**
+		 * Customizr Pro theme. The zoom lens was above the menu.
+		 */
+		if ( strpos( $theme, 'customizr' ) !== false ) {
+			$style .= '#tc-page-wrap { display: contents; } .zoomContainer[style] { z-index: 40 !important; }';
+		}
+
+		/**
 		 * LearnPress plugin.
 		 */
 		if ( defined( 'LP_PLUGIN_FILE' ) ) {
@@ -182,6 +189,13 @@ class IZ_Compatibilities {
 
 		if ( defined( 'BRIZY_VERSION' ) ) {
 			$style .= 'body.brz-ed .zoooom::before' . $zoom_class_in_editor;
+		}
+
+		/**
+		 * The custom lightbox on the Avada theme is blocking the zoom on the WooCommerce product gallery.
+		 */
+		if ( defined( 'AVADA_VERSION' ) && isset( $opt['enable_woocommerce'] ) && $opt['enable_woocommerce'] ) {
+			$style .= '.woocommerce-product-gallery__wrapper .avada-product-gallery .avada-product-gallery-lightbox-trigger { position: relative; }';
 		}
 
 		$type = current_theme_supports( 'html5', 'style' ) ? '' : ' type="text/css"';

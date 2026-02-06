@@ -1,6 +1,16 @@
 
 === Changelog for the WP Image Zoom plugin ===
 
+= 1.61 2025-12-03 =
+* Security: added escaping to input values for admin text inputs
+* Fix: correct the fading time on the frontend
+* Tweak: add the `fetchpriority="low"` attribute to the <script> HTML element
+
+= 1.60 2025-05-16 =
+* Fix: the zoom lens should be under the menu for the Customizr and Customizr Pro theme
+* Fix: _load_textdomain_just_in_time warning was showing up when activating the plugin
+* Fix: correct the lens' fading time on the frontend
+
 = 1.59 2025-03-05 =
 * Feature: compatibility with the SureCart product gallery images
 * Fix: use the pro version, if both the free and the pro version are simultaneously active
