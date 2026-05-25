@@ -1,6 +1,10 @@
 
 === Changelog for the WP Image Zoom plugin ===
 
+= 1.62 2026-05-22 =
+* Feature: add the `wp_image_zoooom_load_scripts` filter
+* Tweak: move the output escaping at the point where the data is being outputted
+
 = 1.61 2025-12-03 =
 * Security: added escaping to input values for admin text inputs
 * Fix: correct the fading time on the frontend

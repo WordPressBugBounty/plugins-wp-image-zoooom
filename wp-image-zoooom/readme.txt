@@ -4,8 +4,8 @@ Contributors: diana_burduja
 Email: diana@burduja.eu
 Tags: zoom, image zoom, magnify image, image magnifier, woocommerce zoom 
 Requires at least: 3.0.1
-Tested up to: 6.9 
-Stable tag: 1.61
+Tested up to: 7.0
+Stable tag: 1.62
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 5.2.4
@@ -154,6 +154,10 @@ Alternatively you can upgrade to the Pro version, as there the zoom lens is buil
 8. Apply the zoom from Page Builder by SiteOrigin, the Image Widget
 
 == Changelog ==
+
+= 1.62 2026-05-22 =
+* Feature: add the `wp_image_zoooom_load_scripts` filter
+* Tweak: move the output escaping at the point where the data is being outputted
 
 = 1.61 2025-12-03 =
 * Security: added escaping to input values for admin text inputs

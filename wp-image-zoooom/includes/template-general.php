@@ -59,27 +59,27 @@ $brand = vsprintf(
 </div>
 
 
-<h2><?php printf( esc_html__( 'WP Image Zoom by %1$s', 'wp-image-zoooom' ), $brand ); ?></h2>
+<h2><?php printf( esc_html__( 'WP Image Zoom by %1$s', 'wp-image-zoooom' ), $brand ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 
 <div class="wrap">
 	<h3 class="nav-tab-wrapper woo-nav-tab-wrapper">
-		<a href="?page=zoooom_settings&tab=general" class="nav-tab nav-tab-active"><?php _e( 'General Settings', 'wp-image-zoooom' ); ?></a>
-		<a href="?page=zoooom_settings&tab=settings" class="nav-tab"><?php _e( 'Zoom Settings', 'wp-image-zoooom' ); ?></a>
+		<a href="?page=zoooom_settings&tab=general" class="nav-tab nav-tab-active"><?php esc_html_e( 'General Settings', 'wp-image-zoooom' ); ?></a>
+		<a href="?page=zoooom_settings&tab=settings" class="nav-tab"><?php esc_html_e( 'Zoom Settings', 'wp-image-zoooom' ); ?></a>
 	</h3>
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="row">
 				<div id="alert_messages">
-				<?php echo $messages; ?>
+				<?php echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 
 				<form class="form-horizontal" method="post" action="" id="form_settings">
-					<?php echo $form->render(); ?>
+					<?php echo $form->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 					<div class="form-group">
 						<div class="col-lg-6">
 							<input type="hidden" name="tab" value="general" />
-							<button type="submit" class="btn btn-primary"><?php _e( 'Save changes', 'wp-image-zoooom' ); ?></button>
+							<button type="submit" class="btn btn-primary"><?php esc_html_e( 'Save changes', 'wp-image-zoooom' ); ?></button>
 						</div>
 					</div>
 					<?php wp_nonce_field( 'zoooom_general' ); ?>

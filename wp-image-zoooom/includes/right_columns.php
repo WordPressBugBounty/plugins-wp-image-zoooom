@@ -44,7 +44,7 @@ $offer_link = 'https://www.silkypress.com/wp-image-zoom-plugin/?a=' . iz_convert
 	<?php if ( $show_discount ) : ?>
 	<div class="panel main_container">
 	<div class="container_title">
-	<h3><img src="<?php echo site_url(); ?>/wp-content/plugins/wp-image-zoooom/assets/images/icon.svg" /> <?php _e( 'WP Image Zoom Pro', 'wp-image-zoooom' ); ?></h3>
+	<h3><img src="<?php echo esc_url( site_url() ); ?>/wp-content/plugins/wp-image-zoooom/assets/images/icon.svg" /> <?php esc_html_e( 'WP Image Zoom Pro', 'wp-image-zoooom' ); ?></h3>
 	</div>
 		<div class="metabox-holder discount" style="text-align: center;"> 
 				
@@ -52,12 +52,12 @@ $offer_link = 'https://www.silkypress.com/wp-image-zoom-plugin/?a=' . iz_convert
 
 		<p>
 		<span style="color: #bc1117; font-size: 24px;">30% OFF</span><br />
-		only between <span style="color: #bc1117;"><?php echo $start_date; ?> - <?php echo $end_date; ?></span>. 
+		only between <span style="color: #bc1117;"><?php echo esc_html( $start_date ); ?> - <?php echo esc_html( $end_date ); ?></span>. 
 
 		</p>
 		<p>Don't tell anyone.</p>
 		<p style="text-align: center;">
-			<a href="<?php echo $offer_link; ?>" target="_blank" class="button" rel="noreferrer"><?php _e( 'Upgrade to PRO', 'wp-image-zoooom' ); ?></a>
+			<a href="<?php echo esc_url( $offer_link ); ?>" target="_blank" class="button" rel="noreferrer"><?php esc_html_e( 'Upgrade to PRO', 'wp-image-zoooom' ); ?></a>
 		</p>
 		</div> 
 	</div>   
@@ -65,11 +65,11 @@ $offer_link = 'https://www.silkypress.com/wp-image-zoom-plugin/?a=' . iz_convert
 	
 	<div class="panel main_container">
 	<div class="container_title">
-		<h3><?php _e( 'Like this Plugin?', 'wp-image-zoooom' ); ?></h3>
+		<h3><?php esc_html_e( 'Like this Plugin?', 'wp-image-zoooom' ); ?></h3>
 	</div>
 		<div class="metabox-holder rating" style="text-align: center;"> 
-		<p><?php _e( 'Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-image-zoooom' ); ?></p>
-		<p><a href="https://wordpress.org/plugins/wp-image-zoooom/" target="_blank" class="button"><?php _e( 'Rate it on WordPress.org', 'wp-image-zoooom' ); ?></a></p>
+		<p><?php esc_html_e( 'Share your opinion with the world on the WordPress.org Plugin Repository.', 'wp-image-zoooom' ); ?></p>
+		<p><a href="https://wordpress.org/plugins/wp-image-zoooom/" target="_blank" class="button"><?php esc_html_e( 'Rate it on WordPress.org', 'wp-image-zoooom' ); ?></a></p>
 		</div> 
 	</div>   
 </div>

@@ -31,7 +31,7 @@ class ImageZoooom_Admin {
 		add_action( 'admin_menu', 'ImageZoooom_Admin::admin_menu' );
 		add_action( 'admin_enqueue_scripts', 'ImageZoooom_Admin::admin_enqueue_scripts' );
 		add_action( 'admin_head', 'ImageZoooom_Admin::iz_add_tinymce_button' );
-		add_action( 'admin_head', 'ImageZoooom_Admin::gutenberg_style' );
+		add_filter( 'block_editor_settings_all', 'ImageZoooom_Admin::gutenberg_style', 10, 2 );
 		add_action( 'enqueue_block_editor_assets', 'ImageZoooom_Admin::enqueue_block_editor_assets' );
 
 		self::warnings();
@@ -151,18 +151,12 @@ class ImageZoooom_Admin {
 		}
 
 		// Premium tooltips.
-		$message = __( 'Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-image-zoooom' );
-		$message = wp_kses(
-			$message,
-			array(
-				'a' => array(
-					'href'   => array(),
-					'target' => array(),
-				),
-			)
-		);
-		$message = sprintf( $message, 'https://www.silkypress.com/wp-image-zoom-plugin/?utm_source=wordpress&utm_campaign=wmsc_free&utm_medium=banner' );
-		new SilkyPress_PremiumTooltips( $message );
+		new SilkyPress_PremiumTooltips( [
+			/* translators: 1: url */
+			'message'      => __('Available only in <a href="%1$s" target="_blank">Pro version</a>', 'wp-image-zoooom'),
+			'allowed_html' => ['a' => ['href' => true, 'target'=> true]],
+			'url'          => 'https://www.silkypress.com/wp-image-zoom-plugin/?utm_source=wordpress&utm_campaign=wmsc_free&utm_medium=banner', 
+		] );
 
 		$messages = $form->render_messages();
 
@@ -229,24 +223,21 @@ class ImageZoooom_Admin {
 	/**
 	 * Image style in the Gutenberg editor
 	 */
-	public static function gutenberg_style() {
-		echo '<style type="text/css">
-				.wp-block-image.is-style-zoooom .components-resizable-box__container::before,
-				.wp-block-image.zoooom .components-resizable-box__container::before {
-                    content: "\f179     ' . __( 'Zoom applied to the image. Check on the frontend', 'wp-image-zoooom' ) . '";
-                    position: absolute;
-                    margin-top: 12px;
-                    text-align: right;
-                    background-color: white;
-					line-height: 1.4em;
-					left: 5%;
-                    padding: 0 10px 6px;
-                    font-family: dashicons;
-                    font-size: 0.9em;
-                    font-style: italic;
-                    z-index: 20;
-                }
-            </style>';
+	public static function gutenberg_style( $editor_settings, $editor_context ) {
+		$style = '.wp-block-image.is-style-zoooom::before,
+			.wp-block-image.zoooom .components-resizable-box__container::before {
+				content: "\1F50E    ' . esc_html( 'Zoom applied to the image. Check on the frontend', 'wp-image-zoooom' ) . '";
+				color: #ccc;
+				position: absolute;
+				background: rgba(0,0,0,0.5);
+				padding: 6px;
+				font-style: italic;
+				z-index: 20;
+			}';
+
+		$editor_settings["styles"][] = ["css" => $style];
+
+		return $editor_settings;
 	}
 
 
