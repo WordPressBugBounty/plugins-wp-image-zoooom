@@ -142,7 +142,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 					$_style        = isset( $_field['style'] ) && 'inline' === $_field['style'] ? '-inline' : '';
 					$input_atts    = ( $__id === $_field['value'] ) ? $atts . ' checked=""' : $atts;
 					$input_values .= vsprintf(
-						'<div class="radio%s"%s><label><input type="radio" name="%s" id="%s" value="%s" %s />%s</label></div>',
+						'<div class="radio%s"%s><label><input type="radio" name="%s" id="%s" value="%s" %s>%s</label></div>',
 						array( $_style, $atts, $_key, $__id, $__id, $input_atts, $__value )
 					);
 				}
@@ -156,7 +156,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 					$__atts .= ( $_field['disabled'] ) ? ' disabled' : '';
 
 					$input_values .= vsprintf(
-						'<label class="btn btn-default %s"><input type="radio" name="%s" id="%s" value="%s" %s /><div class="icon-in-label ndd-spot-icon icon-style-1"%s><div class="ndd-icon-main-element">%s</div></div></label>',
+						'<label class="btn btn-default %s"><input type="radio" name="%s" id="%s" value="%s" %s><div class="icon-in-label ndd-spot-icon icon-style-1"%s><div class="ndd-icon-main-element">%s</div></div></label>',
 						array( $__atts, $_key, $__id, $__id, $__id === $_field['value'] ? 'checked' : '', $toggle, $__value[0] )
 					);
 				}
@@ -168,19 +168,19 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				'radio'       => array( '%s', array( $input_values ) ),
 				'buttons'     => array( '<div class="btn-group%s" data-toggle="buttons" id="btn-group-style-circle">%s</div>', array( $atts, $input_values ) ),
 				'input_color' => array(
-					'<input type="color" class="form-control" id="%s" name="%s" value="%s"%s /><span class="input-group-addon" id="color-text-color-hex">%s</span>',
+					'<input type="color" class="form-control" id="%s" name="%s" value="%s"%s><span class="input-group-addon" id="color-text-color-hex">%s</span>',
 					array( $_key, $_key, esc_attr( $_field['value'] ), $atts, $_field['value'] ),
 				),
 				'input_text'  => array(
-					'<input type="text" class="form-control" id="%s" name="%s" value="%s"%s />',
+					'<input type="text" class="form-control" id="%s" name="%s" value="%s"%s>',
 					array( $_key, $_key, esc_attr( $_field['value'] ), $atts ),
 				),
 				'checkbox'    => array(
-					'<input type="checkbox" id="%s" name="%s" value="1"%s />',
+					'<input type="checkbox" id="%s" name="%s" value="1"%s>',
 					array( $_key, $_key, $atts ),
 				),
 				'header'      => array(
-					'<h4 class="col-sm-5">%s</h4><div style="clear: both;"></div>',
+					'<h4 class="col-sm-12">%s</h4><div style="clear: both;"></div>',
 					array( $_field['label'] ),
 				),
 			);
@@ -199,7 +199,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 			// The description.
 			if ( isset( $_field['description'] ) && ! empty( $_field['description'] ) ) {
 				$description = vsprintf(
-					' <img src="%s" data-toggle="tooltip" data-placement="top" title="%s" data-original-title="%s" />',
+					' <img src="%s" data-toggle="tooltip" data-placement="top" title="%s" data-original-title="%s">',
 					array( $this->atts['tooltip_img'], $_field['description'], $_field['description'] )
 				);
 			}
@@ -257,7 +257,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				if ( 'input_color' === $settings['input_form'] && isset( $post[ $_key ] ) && ! preg_match( '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $post[ $_key ] ) ) {
 					$reset = array(
 						/* translators: 1: field label 2: value */
-						__( 'Unrecognized %1$s. The value was reset to %2$s' ),
+						__( 'Unrecognized %1$s. The value was reset to %2$s', 'wp-image-zoooom' ),
 						array( '<b>' . $settings['label'] . '</b>', '<b>' . $settings['value'] . '</b>' ),
 					);
 				}
@@ -271,7 +271,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 				if ( in_array( $settings['input_form'], array( 'button', 'radio' ), true ) && isset( $post[ $_key ] ) && ! array_key_exists( $post[ $_key ], $settings['values'] ) ) {
 					$reset = array(
 						/* translators: 1: field label 2: value */
-						__( 'Unrecognized %1$s. The value was reset to %2$s' ),
+						__( 'Unrecognized %1$s. The value was reset to %2$s', 'wp-image-zoooom' ),
 						array( '<b>' . $settings['label'] . '</b>', '<b>' . $settings['value'] . '</b>' ),
 					);
 				}
@@ -284,7 +284,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 								'info',
 								vsprintf(
 									/* translators: 1: field label 2: value */
-									__( 'The %1$s field accepts only an integer value. It was set to %2$s' ),
+									__( 'The %1$s field accepts only an integer value. It was set to %2$s', 'wp-image-zoooom' ),
 									array( '<b>' . $settings['label'] . '</b>', (int) $post[ $_key ] )
 								)
 							);
@@ -297,7 +297,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 								'info',
 								vsprintf(
 									/* translators: 1: field label 2: value */
-									__( 'The %1$s field accepts only a number. It was set to %2$s' ),
+									__( 'The %1$s field accepts only a number. It was set to %2$s', 'wp-image-zoooom' ),
 									array( '<b>' . $settings['label'] . '</b>', (float) $post[ $_key ] )
 								)
 							);
@@ -310,7 +310,7 @@ if ( ! class_exists( '\SilkyPressFrm\Form_Fields' ) ) {
 							$post[ $_key ] > $settings['validate']['range'][1] ) ) {
 						$reset = array(
 							/* translators: 1: field label 2: minimum value 3: maximum value 4: value */
-							__( '%1$s accepts values between %2$s and %3$s. Your value was reset to %4$s' ),
+							__( '%1$s accepts values between %2$s and %3$s. Your value was reset to %4$s', 'wp-image-zoooom' ),
 							array( '<b>' . $settings['label'] . '</b>', $settings['validate']['range'][0], $settings['validate']['range'][1], '<b>' . $settings['value'] . '</b>' ),
 						);
 					}

@@ -73,7 +73,7 @@ $brand = vsprintf(
 				<?php echo $messages; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 
-				<form class="form-horizontal" method="post" action="" id="form_settings">
+				<form class="form-horizontal" method="post" id="form_settings">
 					<?php echo $form->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 					<div class="form-group">

@@ -37,7 +37,7 @@ class IZ_Compatibilities {
 
 		$opt                       = get_option( 'zoooom_general', array() );
 		$opt['enable_woocommerce'] = isset( $opt['enable_woocommerce'] ) ? $opt['enable_woocommerce'] : true;
-        $is_woocommerce  = $opt['enable_woocommerce'] && class_exists( 'woocommerce' ) ? true : false;
+        $is_woocommerce  = $opt['enable_woocommerce'] && class_exists( 'WooCommerce', false ) ? true : false;
         $is_woocommerce3 = ( $is_woocommerce ) && version_compare( WC_VERSION, '3.0', '>' ) ? true : false;
 
 
@@ -145,7 +145,7 @@ class IZ_Compatibilities {
 		/**
 		 * Image Hotspot plugin.
 		 */
-		if ( class_exists( 'WP_Image_Hotspot' ) ) {
+		if ( class_exists( 'WP_Image_Hotspot', false ) ) {
 			$style .= '.point_style.ihotspot_tooltop_html {z-index: 1003}';
 		}
 
@@ -212,7 +212,7 @@ class IZ_Compatibilities {
 		$theme = strtolower( get_template() );
 		$opt             = get_option( 'zoooom_general', array() );
 		$opt['enable_woocommerce'] = isset( $opt['enable_woocommerce'] ) ? $opt['enable_woocommerce'] : true;
-		$is_woocommerce  = $opt['enable_woocommerce'] && class_exists( 'woocommerce' ) ? true : false;
+		$is_woocommerce  = $opt['enable_woocommerce'] && class_exists( 'WooCommerce', false ) ? true : false;
 		$is_woocommerce3 = ( $is_woocommerce ) && version_compare( self::$wc_version, '3.0', '>' ) ? true : false;
 
         $js = '';
@@ -281,7 +281,7 @@ class IZ_Compatibilities {
 		$opt                       = get_option( 'zoooom_general', array() );
 		$opt['enable_woocommerce'] = isset( $opt['enable_woocommerce'] ) ? $opt['enable_woocommerce'] : true;
 
-		if ( strpos( $theme, 'enfold' ) !== false && $opt['enable_woocommerce'] && class_exists( 'woocommerce' ) && version_compare( WC_VERSION, '3.0', '>' ) ) {
+		if ( strpos( $theme, 'enfold' ) !== false && $opt['enable_woocommerce'] && class_exists( 'WooCommerce', false ) && version_compare( WC_VERSION, '3.0', '>' ) ) {
 			remove_action( 'woocommerce_product_thumbnails', 'avia_product_gallery_thumbnail_opener', 19 );
 			remove_action( 'woocommerce_product_thumbnails', 'avia_close_div', 21 );
 			remove_filter( 'woocommerce_single_product_image_thumbnail_html', 'avia_woocommerce_gallery_thumbnail_description', 10, 4 );
@@ -289,7 +289,8 @@ class IZ_Compatibilities {
 
 		// Disable the Lazy Loading functionality for the LiteSpeed Cache plugin.
 		if ( defined( 'LSWCP_PLUGIN_URL' ) ) {
-			do_action( 'litespeed_conf_force', 'media-lazy', false );
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound 
+			do_action( 'litespeed_conf_force', 'media-lazy', false ); 		
 		}
 
 		// The Storefront theme adds "img{display:block}" CSS rule to the editor, so the Classic Editor sees no content selected in the editor.selection.getContent().
@@ -304,7 +305,7 @@ class IZ_Compatibilities {
 	 * Declare compatibility with the WooCommerce COT (custom order tables) feature.
 	 */
 	public static function before_woocommerce_init() {
-		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil', false ) ) {
 			$path = WP_PLUGIN_DIR . '/wp-image-zoooom/image-zoooom.php';
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $path, true );
 		}
@@ -344,6 +345,7 @@ add_action( 'plugins_loaded', array( 'IZ_Compatibilities', 'init' ) );
  * Enable the `wp_calculate_image_srcset` feature on the X theme.
  */
 if ( ! function_exists( 'x_disable_wp_image_srcset' ) ) {
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound 
 	function x_disable_wp_image_srcset() {
 		return true;
 	}

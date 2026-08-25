@@ -3,7 +3,7 @@
  * Plugin Name:          WP Image Zoom
  * Plugin URI:           https://wordpress.org/plugins/wp-image-zoooom/
  * Description:          Add zoom effect over the an image, whether it is an image in a post/page or the featured image of a product in a WooCommerce shop
- * Version:              1.62
+ * Version:              1.63
  * Author:               SilkyPress
  * Author URI:           https://www.silkypress.com
  * License:              GPLv3
@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'ImageZoooom' ) ) :
+if ( ! class_exists( 'ImageZoooom', false ) ) :
 	/**
 	 * Main ImageZoooom Class
 	 *
 	 * @class ImageZoooom
 	 */
 	class ImageZoooom {
-		public static $version         = '1.62';
+		public static $version         = '1.63';
 		public static $options_general = array();
 		public static $theme           = '';
 
@@ -43,7 +43,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 			define( 'IMAGE_ZOOM_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'IMAGE_ZOOM_VERSION', self::$version );
 
-			if ( class_exists( 'ImageZoooomPRO' ) ) {
+			if ( class_exists( 'ImageZoooomPRO', false ) ) {
 				return false;
 			}
 
@@ -72,7 +72,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 			}
 
 			// Adjust the zoom to WooCommerce 3.0.+
-			if ( $opt['enable_woocommerce'] && class_exists( 'woocommerce' ) && version_compare( WC_VERSION, '3.0', '>' ) ) {
+			if ( $opt['enable_woocommerce'] && class_exists( 'WooCommerce', false ) && version_compare( WC_VERSION, '3.0', '>' ) ) {
 				remove_theme_support( 'wc-product-gallery-zoom' );
 				// remove_theme_support( 'wc-product-gallery-lightbox' );
 				add_theme_support( 'wc-product-gallery-slider' );
@@ -256,7 +256,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 			wp_enqueue_script( 'image_zoooom-init' );
 
 			// Remove the prettyPhoto
-			if ( self::woocommerce_is_active() && function_exists( 'is_product' ) && is_product() ) {
+			if ( class_exists( 'WooCommerce', false ) && function_exists( 'is_product' ) && is_product() ) {
 				wp_dequeue_script( 'prettyPhoto' );
 				wp_dequeue_script( 'prettyPhoto-init' );
 			}
@@ -281,15 +281,15 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 				'enable_surecart'     => ( isset( $general['enable_surecart'] ) && $general['enable_surecart'] == 1 ) ? '1' : '0',
 			);
 
-			if ( class_exists( 'woocommerce' ) && version_compare( WC_VERSION, '3.0', '>' ) && current_theme_supports( 'wc-product-gallery-slider' ) ) {
+			if ( class_exists( 'WooCommerce', false ) && version_compare( WC_VERSION, '3.0', '>' ) && current_theme_supports( 'wc-product-gallery-slider' ) ) {
 				$default['woo_slider'] = 1;
 			}
 
-			if ( class_exists( 'wooswipe_plugin_options' ) ) {
+			if ( class_exists( 'wooswipe_plugin_options', false ) ) {
 				$default['woo_slider'] = 0;
 			}
 
-			if ( ! self::woocommerce_is_active() ) {
+			if ( ! class_exists( 'WooCommerce', false ) ) {
 				$default['with_woocommerce'] = '0';
 			}
 
@@ -394,18 +394,6 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 		}
 
 
-		/**
-		 * Check if WooCommerce is activated
-		 *
-		 * @return bool
-		 */
-		public static function woocommerce_is_active() {
-			if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-				return true;
-			}
-			return false;
-		}
-
 		public static function get_option_general() {
 			$general = get_option( 'zoooom_general', array() );
 
@@ -425,7 +413,7 @@ if ( ! class_exists( 'ImageZoooom' ) ) :
 				$general['woo_cat'] = false;
 			}
 
-			if ( ! self::woocommerce_is_active() ) {
+			if ( ! class_exists( 'WooCommerce', false ) ) {
 				$general['woo_cat'] = false;
 			}
 

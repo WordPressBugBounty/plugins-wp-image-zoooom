@@ -30,7 +30,7 @@ $brand = vsprintf(
 					<?php echo $messages; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 		
-				<form class="form-horizontal" method="post" action="" id="form_settings">
+				<form class="form-horizontal" method="post" id="form_settings">
 					<div class="form-group">
 					<div class="steps">
 						<span class="steps_nr"><?php esc_html_e( 'Step 1', 'wp-image-zoooom' ); ?></span>

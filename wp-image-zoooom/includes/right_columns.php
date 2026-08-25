@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' ) || exit;
+
 $now = time();
 
 $zoooom_activation_time = get_option( 'zoooom_activation_time', '' );
@@ -17,8 +19,8 @@ if ( $now - 3 * 86400 < $zoooom_activation_time ) {
 	$show_discount = true;
 }
 
-$start_date = date( 'j M', $zoooom_activation_time - 3 * 86400 );
-$end_date   = date( 'j M', $zoooom_activation_time + 2 * 86400 );
+$start_date = gmdate( 'j M', $zoooom_activation_time - 3 * 86400 );
+$end_date   = gmdate( 'j M', $zoooom_activation_time + 2 * 86400 );
 
 
 
@@ -44,7 +46,7 @@ $offer_link = 'https://www.silkypress.com/wp-image-zoom-plugin/?a=' . iz_convert
 	<?php if ( $show_discount ) : ?>
 	<div class="panel main_container">
 	<div class="container_title">
-	<h3><img src="<?php echo esc_url( site_url() ); ?>/wp-content/plugins/wp-image-zoooom/assets/images/icon.svg" /> <?php esc_html_e( 'WP Image Zoom Pro', 'wp-image-zoooom' ); ?></h3>
+	<h3><img src="<?php echo esc_url( site_url() ); ?>/wp-content/plugins/wp-image-zoooom/assets/images/icon.svg"> <?php esc_html_e( 'WP Image Zoom Pro', 'wp-image-zoooom' ); ?></h3>
 	</div>
 		<div class="metabox-holder discount" style="text-align: center;"> 
 				

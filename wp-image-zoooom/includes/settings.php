@@ -400,7 +400,7 @@ if ( ! function_exists( 'wp_image_zoooom_settings' ) ) {
 				'label'       => __( 'Remove the lightbox', 'wp-image-zoooom' ),
 				'value'       => true,
 				'input_form'  => 'checkbox',
-				'description' => __( 'Some themes implement a lightbox that opens on click on the image. Enabling this checkbox will remove the lightbox' ),
+				'description' => __( 'Some themes implement a lightbox that opens on click on the image. Enabling this checkbox will remove the lightbox', 'wp-image-zoooom' ),
 				'pro'        => true,
 				'section'     => 'general',
 			),
